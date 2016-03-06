@@ -12,28 +12,35 @@ class ResultsLoader
 
     if is_a_file
       CSV.foreach(results) do |row|
-        raise "Round #{@results.count + 1} has #{row.count} teams and was expecting #{teams_count}" unless row.count == teams_count
-
+        teams = []
         row.each do |cell|
-          raise "Team #{cell} is not valid" unless @teams_loader.valid? cell
+          unless cell.nil? || cell.empty?
+            teams << cell
+            raise "Team #{cell} is not valid" unless @teams_loader.valid? cell
+          end
         end
 
-        @results << row
+        raise "Round #{@results.count + 1} has #{teams.count} teams and was expecting #{teams_count}" unless teams.count == teams_count
+
+        @results << teams
         teams_count = teams_count / 2
       end
     else
       results.each_line do |line|
         CSV.parse(line) do |row|
-          raise "Round #{@results.count + 1} has #{row.count} teams and was expecting #{teams_count}" unless row.count == teams_count
-
+          teams = []
           row.each do |cell|
-            raise "Team #{cell} is not valid" unless @teams_loader.valid? cell
+            unless cell.nil? || cell.empty?
+              teams << cell
+              raise "Team #{cell} is not valid" unless @teams_loader.valid? cell
+            end
           end
 
-          @results << row
-        end
+          raise "Round #{@results.count + 1} has #{teams.count} teams and was expecting #{teams_count}" unless teams.count == teams_count
 
-        teams_count = teams_count / 2
+          @results << teams
+          teams_count = teams_count / 2
+        end
       end
     end
 

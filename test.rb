@@ -16,7 +16,7 @@ raise "Validated a list of teams with an invalid team" if team_loader.valid? ["W
 results_loader = ResultsLoader.new 'valid_results_sample_file.csv'
 raise "Results did not load input file" if results_loader.results.empty?
 
-results_loader2 = ResultsLoader.new Net::HTTP.get(URI 'https://raw.githubusercontent.com/42sixsolutions/march-madness/master/results-sample.csv'), false
+results_loader2 = ResultsLoader.new Net::HTTP.get(URI 'https://raw.githubusercontent.com/42sixsolutions/march-madness-checker/master/valid_results_sample_file2.csv'), false
 raise "Results did not load input file" if results_loader2.results.empty?
 
 score_loader = ScoreLoader.new results_loader.results, results_loader2.results

@@ -1,1 +1,1 @@
-ruby run.rb actual_results_input_file contestant_results_input_file
+ruby run.rb actual_results_input_file_or_url contestant_results_input_file_or_url
